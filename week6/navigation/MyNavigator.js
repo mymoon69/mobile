@@ -26,7 +26,7 @@ const MainNavigator = createDrawerNavigator();
 function MealNavigation() {
   return (
     <MealNavigator.Navigator
-      initialRouteName="Categories"
+      initialRouteName="CategoriesScreen"
       screenOptions={{
         headerStyle: { backgroundColor: "#4a148c" },
         headerTintColor: "white",
@@ -60,14 +60,14 @@ function MealNavigation() {
 function FavNavigation() {
   return (
     <FavNavigator.Navigator
-      initialRouteName="Favorites"
+      initialRouteName="FavoritesScreen"
       screenOptions={{
         headerStyle: { backgroundColor: "#4a148c" },
         headerTintColor: "white",
       }}
     >
       <FavNavigator.Screen
-        name="Favorites"
+        name="Favorite"
         component={FavoritesScreen}
         options={{
           title: "Your Favorites",
@@ -88,20 +88,20 @@ function FavNavigation() {
 function MealsFavTabNavigation() {
   return (
     <MealsFavTabNavigator.Navigator
-    screenOptions={{
-      tabBarActiveTintColor: "darkblue",
-      tabBarStyle: { backgroundColor: "lightblue" },
-      tabBarLabelStyle: { fontSize: 15 },
-      headerShown: false,
-    }}>
+      screenOptions={{
+        tabBarActiveTintColor: "darkblue",
+        tabBarStyle: { backgroundColor: "lightblue" },
+        tabBarLabelStyle: { fontSize: 15 },
+        headerShown: false,
+      }}>
       <MealsFavTabNavigator.Screen
-      name="Meals"
-      component={MealNavigation}
-      options={{
-        tabBarIcon: ({ color, size }) => {
-          return <Ionicons name="ios-restaurant" size={size} color={color} />
-        }
-      }}/>
+        name="Meal"
+        component={MealNavigation}
+        options={{
+          tabBarIcon: ({ color, size }) => {
+            return <Ionicons name="ios-restaurant" size={size} color={color} />
+          }
+        }} />
       <MealsFavTabNavigator.Screen
         name="Favorites"
         component={FavNavigation}
@@ -115,12 +115,45 @@ function MealsFavTabNavigation() {
   );
 }
 
+function FiltersNavigation() {
+  return (
+    <FiltersNavigator.Navigator
+      initialRouteName="FiltersScreen"
+      screenOptions={{
+        headerStyle: { backgroundColor: "#4a148c", },
+        headerTintColor: "white"
+      }}>
+      <FiltersNavigator.Screen
+        name="Filters Meals"
+        component={FiltersScreen}
+      />
+    </FiltersNavigator.Navigator>
+  );
+}
+
 // สร้าง Navigator หลัก
 export default function MyNavigator() {
   return (
     <NavigationContainer>
-      <MealsFavTabNavigation/>
-      {/* รายละเอียดของ Navigator หลัก (MainNavigator) */}
+      <MainNavigator.Navigator
+        screenOptions={{
+          headerShown: false,
+          drawerActiveTintColor: "orange",
+          drawerInactiveTintColor: "gray",
+        }}
+      >
+        <MainNavigator.Screen
+          name="Meals"
+          component={MealsFavTabNavigation}
+          options={{
+            title: "Meal",
+          }}
+        />
+        <MainNavigator.Screen
+          name="Filters"
+          component={FiltersNavigation}
+        />
+      </MainNavigator.Navigator>
     </NavigationContainer>
   );
 }

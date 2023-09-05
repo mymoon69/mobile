@@ -16,7 +16,7 @@ const MealList = (props) => {
       affordability={itemData.item.affordability}
       imageUrl={itemData.item.imageUrl}
       onSelectMeal={() => {
-        navigation.navigate("MEalDetail", { prev: "CategoryMeals", steps: itemData.item.step, title: itemData.item.title })
+        navigation.navigate("MealDetail", { prev: "CategoryMeals", steps: itemData.item.steps, title: itemData.item.title })
       }}
       />
     );

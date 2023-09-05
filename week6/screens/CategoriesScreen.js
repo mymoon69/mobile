@@ -1,40 +1,37 @@
 import React from "react";
 import {
-  View,
-  Text,
-  Button,
-  StyleSheet,
-  Platform,
   FlatList,
+  StyleSheet,
 } from "react-native";
-import { CATEGORIES, MEALS } from "../data/dummy-data";
-// import MealItem from "../components/MealItem";
-import MealList from "../components/MealList";
+import { CATEGORIES } from "../data/dummy-data";
+import CategoryGridTile from "../components/CategoryGridTile";
 
-const CategoryMealsScreen = ({ route, navigation }) => {
-  const { prev, id } = route.params;
-  const catId = id
+const CategoriesScreen = ({navigation}) => {
+  const renderGridItem = (itemData) => {
+    return (
+      <CategoryGridTile
+        title={ itemData.item.title }
+        color={ itemData.item.color }
+        onSelect={() => {
+          navigation.navigate("CategoryMeals", {id: itemData.item.id, title: itemData.item.title})
+          
+          // เขียนโค้ดเพิ่ม
+        }}
+      />
 
-  const displayedMeals = MEALS.filter(
-    (meal) => meal.categoryIds.indexOf(catId) >= 0
-  );
+      // ส่วนนี้ <View>...</View>ใช้เพื่อการทดลอง และให้คอมเมนต์โค้ดส่วนนี้และเรียกใช้ <CategoryGridTile> ข้างต้นแทน
+      // <View style={{ height: 50, width: "40%" }}>
+      //   <Text>{itemData.item.title}</Text>
+      // </View>
+    );
+  };
 
   return (
-    <View style={styles.screen}>
-      <MealList
-        listData={displayedMeals}
-        navigation={navigation}>
-      </MealList>
-      {/* <FlatList
-        style={{ width: "100%", height: "100%" }}
-        data={displayedMeals}
-        renderItem={renderMealItem}
-      /> */}
-    </View>
+    <FlatList data={CATEGORIES} renderItem={renderGridItem} numColumns={2} />
 
-    // ส่วนนี้ <View>...</View>ใช้เพื่อการทดลอง และให้คอมเมนต์โค้ดส่วนนี้และเรียกใช้ <FlatList> ข้างบนแทน
+    // ส่วนนี้ <View>...</View>ใช้เพื่อการทดลอง และให้คอมเมนต์โค้ดส่วนนี้และเรียกใช้ <FlatList> ข้างต้นแทน
     // <View>
-    //   <Text>Category Meals Screen!!</Text>
+    //   <Text>Categories Screen</Text>
     // </View>
   );
 };
@@ -47,4 +44,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CategoryMealsScreen;
+export default CategoriesScreen;
